@@ -16,4 +16,5 @@ RUN apk add --no-cache \
     && lein do clean, uberjar \
     && cp target/IClojure.jar resources/clj_jupyter \
     && sed -i 's/HOME\/Library\/Jupyter/\/usr\/local\/share\/jupyter/' resources/clj_jupyter/kernel.json \
-    && jupyter kernelspec install resources/clj_jupyter --name clojure
+    && jupyter kernelspec install resources/clj_jupyter --name clojure \
+    && rm -rf /tmp/clj-jupyter
