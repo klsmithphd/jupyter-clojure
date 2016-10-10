@@ -9,4 +9,11 @@ RUN apk add --no-cache \
     musl-dev \
     python3 \
     python3-dev \
-    && pip3 --no-cache-dir install jupyter 
+    && pip3 --no-cache-dir install jupyter \
+    && cd /tmp \
+    && git clone https://github.com/achesnais/clj-jupyter.git \
+    && cd clj-jupyter \
+    && lein do clean, uberjar \
+    && cp target/IClojure.jar resources/clj_jupyter \
+    && sed -i 's/HOME\/Library\/Jupyter/\/usr\/local\/share\/jupyter/' resources/clj_jupyter/kernel.json \
+    && jupyter kernelspec install resources/clj_jupyter --name clojure
