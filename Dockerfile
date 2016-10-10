@@ -17,4 +17,10 @@ RUN apk add --no-cache \
     && cp target/IClojure.jar resources/clj_jupyter \
     && sed -i 's/HOME\/Library\/Jupyter/\/usr\/local\/share\/jupyter/' resources/clj_jupyter/kernel.json \
     && jupyter kernelspec install resources/clj_jupyter --name clojure \
-    && rm -rf /tmp/clj-jupyter
+    && rm -rf /tmp/clj-jupyter \
+    && adduser -D -s /bin/false jupyter
+
+WORKDIR /home/jupyter
+EXPOSE 8888
+USER jupyter
+CMD ["jupyter", "notebook", "--ip='*'"]
